@@ -8,8 +8,8 @@ const Home = ({ socket }) => {
 
   const [boxes, setBoxes] = useState([]);
   const [time, setTime] = useState(new Date());
-  
-  
+  const [canvasStarted, setCanvasStarted] = useState(false); // New state for canvas start
+
   useEffect(() => {
     const usersListener = (data) => {
       setUsers(data);
@@ -37,6 +37,9 @@ const Home = ({ socket }) => {
     };
   }, [socket, users, first]);
 
+  const startCanvas = () => {
+    setCanvasStarted(true); // Set canvasStarted to true when button is pressed
+  };
 
   const draw = (ctx, frameCount, balls) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -126,9 +129,12 @@ const Home = ({ socket }) => {
   
   const width = typeof window !== 'undefined' ? window.innerWidth : 0;
   const height = typeof window !== 'undefined' ? window.innerHeight : 0;
-  
+
   return (
-    <Canvas draw={draw} width={width} height={height}/>
+    <div>
+      {!canvasStarted && <button onClick={startCanvas}>Start Playing</button>} {/* Button to start canvas */}
+      {canvasStarted && <Canvas draw={draw} width={width} height={height} />} {/* Render canvas when canvasStarted is true */}
+    </div>
   );
 };
 
