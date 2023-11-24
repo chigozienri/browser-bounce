@@ -17,8 +17,8 @@ const Home = ({ socket }) => {
         let tmpBoxList = []
         users.forEach((user) => {
           if (user.id !== socket.id) {
-            user.position.x -= window.screenLeft;
-            user.position.y -= window.screenTop;
+            user.position.x -= window.screenLeft ? window.screenLeft : window.screenX;
+            user.position.y -= window.screenTop ? window.screenTop : window.screenY;;
             tmpBoxList.push(user.position);
             console.log(user.position);
           }
@@ -109,8 +109,8 @@ const Home = ({ socket }) => {
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
     let tempScreenDetails = {
-      x: window.screenLeft,
-      y: window.screenTop,
+      x: window.screenLeft ? window.screenLeft : window.screenX,
+      y: window.screenTop ? window.screenTop : window.screenY,
       width: window.innerWidth,
       height: window.innerHeight
     };
